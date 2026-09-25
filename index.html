@@ -1,0 +1,1303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TAHA -- 3D Creator</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+html,body{
+  background:#0C0C0C;
+  color:#D7E2EA;
+  font-family:'Kanit',sans-serif;
+  scroll-behavior:smooth;
+  overflow-x:hidden;
+}
+
+body{
+  overflow-x:clip;
+}
+
+a{
+  color:inherit;
+  text-decoration:none;
+}
+
+.hero-heading{
+  background:linear-gradient(180deg,#646973 0%,#BBCCD7 100%);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+
+/* ================= NAV ================= */
+
+.hero{
+  min-height:100vh;
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+}
+
+.nav{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:24px 24px 0;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  font-weight:500;
+  font-size:14px;
+  position:relative;
+  z-index:30;
+  animation:fadeDown .8s ease forwards;
+}
+
+.nav a{
+  transition:.2s;
+}
+
+.nav a:hover{
+  opacity:.7;
+}
+
+@media(min-width:640px){
+  .nav{
+    padding:32px 40px 0;
+    font-size:18px;
+  }
+}
+
+@media(min-width:1024px){
+  .nav{
+    font-size:1.4rem;
+  }
+}
+
+/* ================= HERO ================= */
+
+.hero-title-wrap{
+  overflow:hidden;
+  width:100%;
+  margin-top:24px;
+  position:relative;
+  z-index:4;
+}
+
+.hero-title{
+  width:100%;
+  white-space:nowrap;
+  text-align:center;
+  font-size:14vw;
+  line-height:.9;
+  font-weight:900;
+  text-transform:uppercase;
+  letter-spacing:-.06em;
+  animation:titleIn 1s cubic-bezier(.25,.1,.25,1) .15s both;
+}
+
+@media(min-width:640px){
+  .hero-title{
+    font-size:15vw;
+  }
+  .hero-title-wrap{
+    margin-top:16px;
+  }
+}
+
+@media(min-width:768px){
+  .hero-title{
+    font-size:16vw;
+  }
+  .hero-title-wrap{
+    margin-top:-20px;
+  }
+}
+
+@media(min-width:1024px){
+  .hero-title{
+    font-size:17.5vw;
+  }
+}
+
+.hero-bottom{
+  margin-top:auto;
+  padding:0 24px 28px;
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  position:relative;
+  z-index:20;
+}
+
+.hero-description{
+  color:#D7E2EA;
+  font-weight:300;
+  text-transform:uppercase;
+  letter-spacing:.05em;
+  line-height:1.1;
+  max-width:160px;
+  font-size:clamp(.75rem,1.4vw,1.5rem);
+  animation:fadeUp .8s ease .35s both;
+}
+
+@media(min-width:640px){
+  .hero-bottom{
+    padding:0 40px 32px;
+  }
+
+  .hero-description{
+    max-width:220px;
+  }
+}
+
+@media(min-width:768px){
+  .hero-description{
+    max-width:260px;
+  }
+
+  .hero-bottom{
+    padding-bottom:40px;
+  }
+}
+
+/* ================= CONTACT BUTTON ================= */
+
+.contact-btn{
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  border:0;
+  border-radius:999px;
+  padding:12px 32px;
+  color:white;
+  background:linear-gradient(
+    123deg,
+    #18011F 7%,
+    #B600A8 37%,
+    #7621B0 72%,
+    #BE4C00 100%
+  );
+  box-shadow:
+    0 4px 4px rgba(181,1,167,.25),
+    4px 4px 12px #7721B1 inset;
+  outline:2px solid white;
+  outline-offset:-3px;
+  font-family:inherit;
+  font-weight:500;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  font-size:12px;
+  cursor:pointer;
+  transition:transform .3s,filter .3s;
+  animation:fadeUp .8s ease .5s both;
+}
+
+.contact-btn:hover{
+  transform:translateY(-4px) scale(1.03);
+  filter:brightness(1.15);
+}
+
+@media(min-width:640px){
+  .contact-btn{
+    padding:14px 40px;
+    font-size:14px;
+  }
+}
+
+@media(min-width:768px){
+  .contact-btn{
+    padding:16px 48px;
+    font-size:16px;
+  }
+}
+
+/* ================= HERO PORTRAIT ================= */
+
+.hero-portrait{
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
+  width:280px;
+  z-index:10;
+  bottom:0;
+  animation:portraitIn 1s cubic-bezier(.25,.1,.25,1) .6s both;
+}
+
+.hero-portrait img{
+  width:100%;
+  display:block;
+  object-fit:contain;
+  transition:transform .25s ease-out;
+  will-change:transform;
+}
+
+@media(max-width:639px){
+  .hero-portrait{
+    top:50%;
+    bottom:auto;
+    transform:translate(-50%,-50%);
+  }
+}
+
+@media(min-width:640px){
+  .hero-portrait{
+    width:360px;
+  }
+}
+
+@media(min-width:768px){
+  .hero-portrait{
+    width:440px;
+  }
+}
+
+@media(min-width:1024px){
+  .hero-portrait{
+    width:520px;
+  }
+}
+
+/* ================= MARQUEE ================= */
+
+.marquee-section{
+  padding:120px 0 40px;
+  background:#0C0C0C;
+  overflow:hidden;
+}
+
+.marquee-row{
+  display:flex;
+  gap:12px;
+  width:max-content;
+  margin-bottom:12px;
+  will-change:transform;
+}
+
+.marquee-row img{
+  width:420px;
+  height:270px;
+  object-fit:cover;
+  border-radius:16px;
+  flex-shrink:0;
+  display:block;
+}
+
+@media(max-width:600px){
+  .marquee-row img{
+    width:300px;
+    height:200px;
+  }
+}
+
+/* ================= ABOUT ================= */
+
+.about{
+  min-height:100vh;
+  position:relative;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:80px 20px;
+  overflow:hidden;
+}
+
+.about-content{
+  position:relative;
+  z-index:5;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:40px;
+}
+
+.about h2,
+.services h2,
+.projects h2{
+  font-size:clamp(3rem,12vw,160px);
+  line-height:.9;
+  font-weight:900;
+  text-transform:uppercase;
+  letter-spacing:-.05em;
+}
+
+.about-text{
+  max-width:560px;
+  color:#D7E2EA;
+  font-weight:500;
+  line-height:1.7;
+  font-size:clamp(1rem,2vw,1.35rem);
+}
+
+.about-text span{
+  opacity:.2;
+  transition:opacity .15s linear;
+}
+
+.about .contact-btn{
+  margin-top:40px;
+}
+
+.decor{
+  position:absolute;
+  z-index:1;
+  pointer-events:none;
+  transition:transform 1s cubic-bezier(.25,.1,.25,1),opacity 1s;
+  opacity:0;
+}
+
+.decor.visible{
+  opacity:1;
+  transform:translate(0,0) !important;
+}
+
+.moon{
+  width:120px;
+  top:4%;
+  left:1%;
+  transform:translateX(-80px);
+}
+
+.object{
+  width:100px;
+  bottom:8%;
+  left:3%;
+  transform:translateX(-80px);
+}
+
+.lego{
+  width:120px;
+  top:4%;
+  right:1%;
+  transform:translateX(80px);
+}
+
+.group{
+  width:130px;
+  bottom:8%;
+  right:3%;
+  transform:translateX(80px);
+}
+
+@media(min-width:640px){
+  .moon,.lego{
+    width:160px;
+  }
+
+  .object{
+    width:140px;
+  }
+
+  .group{
+    width:170px;
+  }
+}
+
+@media(min-width:768px){
+  .about{
+    padding:80px 40px;
+  }
+
+  .moon,.lego{
+    width:210px;
+  }
+
+  .object{
+    width:180px;
+    left:10%;
+  }
+
+  .group{
+    width:220px;
+    right:10%;
+  }
+}
+
+/* ================= SERVICES ================= */
+
+.services{
+  background:#fff;
+  color:#0C0C0C;
+  border-radius:60px 60px 0 0;
+  padding:80px 20px 100px;
+  position:relative;
+  z-index:5;
+}
+
+.services h2{
+  text-align:center;
+  margin-bottom:64px;
+}
+
+.services-list{
+  max-width:1024px;
+  margin:auto;
+}
+
+.service{
+  display:grid;
+  grid-template-columns:35% 65%;
+  align-items:center;
+  padding:32px 0;
+  border-bottom:1px solid rgba(12,12,12,.15);
+  opacity:0;
+  transform:translateY(30px);
+  transition:.7s ease;
+}
+
+.service.visible{
+  opacity:1;
+  transform:translateY(0);
+}
+
+.service-number{
+  font-size:clamp(3rem,10vw,140px);
+  line-height:.8;
+  font-weight:900;
+}
+
+.service-name{
+  font-size:clamp(1rem,2.2vw,2.1rem);
+  font-weight:500;
+  text-transform:uppercase;
+}
+
+.service-description{
+  max-width:650px;
+  margin-top:8px;
+  font-size:clamp(.85rem,1.6vw,1.25rem);
+  font-weight:300;
+  line-height:1.6;
+  opacity:.6;
+}
+
+@media(max-width:600px){
+  .service{
+    grid-template-columns:30% 70%;
+  }
+}
+
+/* ================= PROJECTS ================= */
+
+.projects{
+  background:#0C0C0C;
+  border-radius:60px 60px 0 0;
+  margin-top:-56px;
+  padding:80px 20px 100px;
+  position:relative;
+  z-index:10;
+}
+
+.projects h2{
+  text-align:center;
+  margin-bottom:40px;
+}
+
+.project-stack{
+  max-width:1200px;
+  margin:auto;
+}
+
+.project-container{
+  height:85vh;
+  position:relative;
+}
+
+.project-card{
+  position:sticky;
+  top:100px;
+  height:80vh;
+  border:2px solid #D7E2EA;
+  border-radius:50px;
+  background:#0C0C0C;
+  padding:24px;
+  overflow:hidden;
+  transform-origin:top center;
+  transition:transform .15s linear;
+}
+
+.project-top{
+  display:grid;
+  grid-template-columns:80px 1fr 1.5fr auto;
+  gap:15px;
+  align-items:center;
+  margin-bottom:20px;
+}
+
+.project-number{
+  font-size:clamp(3rem,10vw,100px);
+  line-height:.8;
+  font-weight:900;
+}
+
+.project-category{
+  text-transform:uppercase;
+  opacity:.7;
+  font-size:14px;
+}
+
+.project-name{
+  font-size:clamp(1.2rem,3vw,2.5rem);
+  text-transform:uppercase;
+  font-weight:600;
+}
+
+.live-btn{
+  border:2px solid #D7E2EA;
+  border-radius:999px;
+  background:transparent;
+  color:#D7E2EA;
+  padding:12px 28px;
+  font-family:inherit;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  cursor:pointer;
+  transition:.25s;
+}
+
+.live-btn:hover{
+  background:rgba(215,226,234,.1);
+}
+
+.project-images{
+  display:grid;
+  grid-template-columns:40% 60%;
+  gap:12px;
+  height:calc(100% - 105px);
+}
+
+.project-left{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+.project-left img,
+.project-right img{
+  width:100%;
+  object-fit:cover;
+  border-radius:45px;
+  border:1px solid rgba(215,226,234,.2);
+}
+
+.project-left img:first-child{
+  height:38%;
+}
+
+.project-left img:last-child{
+  height:62%;
+}
+
+.project-right img{
+  height:100%;
+}
+
+@media(max-width:700px){
+  .project-card{
+    padding:16px;
+    border-radius:35px;
+  }
+
+  .project-top{
+    grid-template-columns:50px 1fr;
+  }
+
+  .project-number{
+    font-size:50px;
+  }
+
+  .project-category{
+    display:none;
+  }
+
+  .project-name{
+    font-size:18px;
+  }
+
+  .live-btn{
+    grid-column:2;
+    padding:8px 16px;
+    font-size:11px;
+  }
+
+  .project-images{
+    height:calc(100% - 135px);
+  }
+
+  .project-left img,
+  .project-right img{
+    border-radius:25px;
+  }
+}
+
+/* ================= ANIMATIONS ================= */
+
+@keyframes fadeDown{
+  from{
+    opacity:0;
+    transform:translateY(-20px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+@keyframes fadeUp{
+  from{
+    opacity:0;
+    transform:translateY(30px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+@keyframes titleIn{
+  from{
+    opacity:0;
+    transform:translateY(40px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+@keyframes portraitIn{
+  from{
+    opacity:0;
+    transform:translate(-50%,30px);
+  }
+  to{
+    opacity:1;
+    transform:translate(-50%,0);
+  }
+}
+
+footer{
+  padding:50px 20px;
+  text-align:center;
+  background:#0C0C0C;
+  color:#D7E2EA;
+  opacity:.5;
+}
+</style>
+</head>
+
+<body>
+
+<!-- ================= HERO ================= -->
+
+<section class="hero" id="home">
+
+  <nav class="nav">
+    <a href="#about">About</a>
+    <a href="#services">Price</a>
+    <a href="#projects">Projects</a>
+    <a href="mailto:tahashyk11@gmail.com">Contact</a>
+  </nav>
+
+  <div class="hero-title-wrap">
+    <h1 class="hero-heading hero-title">
+      Hi, i'm TAHA
+    </h1>
+  </div>
+
+  <div class="hero-portrait" id="magnet">
+    <img
+      src="https://shrug-person-78902957.figma.site/_components/v2/d24c01ad3a56fc65e942a1f501eb73db42d7cf9a/Rectangle_40443.81459862.png"
+      alt="TAHA 3D Creator"
+    >
+  </div>
+
+  <div class="hero-bottom">
+    <p class="hero-description">
+      a 3d creator driven by crafting striking and unforgettable projects
+    </p>
+
+    <a href="mailto:hello@jack3d.com" class="contact-btn">
+      Contact Me
+    </a>
+  </div>
+
+</section>
+
+
+<!-- ================= MARQUEE ================= -->
+
+<section class="marquee-section" id="marquee">
+
+  <div class="marquee-row row1" id="row1"></div>
+  <div class="marquee-row row2" id="row2"></div>
+
+</section>
+
+
+<!-- ================= ABOUT ================= -->
+
+<section class="about" id="about">
+
+  <img
+    class="decor moon"
+    src="https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/moon_icon.11395d36.png"
+    alt=""
+  >
+
+  <img
+    class="decor object"
+    src="https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/p59_1.4659672e.png"
+    alt=""
+  >
+
+  <img
+    class="decor lego"
+    src="https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/lego_icon-1.703bb594.png"
+    alt=""
+  >
+
+  <img
+    class="decor group"
+    src="https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/Group_134-1.2e04f3ce.png"
+    alt=""
+  >
+
+  <div class="about-content">
+
+    <h2 class="hero-heading">
+      About me
+    </h2>
+
+    <p class="about-text" id="aboutText">
+      With more than five years of experience in design, i focus on branding,
+      web design, and user experience, i truly enjoy working with businesses
+      that aim to stand out and present their best image. Let's build something
+      incredible together!
+    </p>
+
+    <a href="mailto:hello@jack3d.com" class="contact-btn">
+      Contact Me
+    </a>
+
+  </div>
+
+</section>
+
+
+<!-- ================= SERVICES ================= -->
+
+<section class="services" id="services">
+
+  <h2>Services</h2>
+
+  <div class="services-list">
+
+    <div class="service">
+      <div class="service-number">01</div>
+      <div>
+        <div class="service-name">3D Modeling</div>
+        <p class="service-description">
+          Creation of detailed objects, characters, or environments tailored
+          to specific client needs, ideal for games, products, and visualizations.
+        </p>
+      </div>
+    </div>
+
+    <div class="service">
+      <div class="service-number">02</div>
+      <div>
+        <div class="service-name">Rendering</div>
+        <p class="service-description">
+          High-quality, photorealistic renders that showcase designs with
+          custom lighting, textures, and materials to bring concepts to life.
+        </p>
+      </div>
+    </div>
+
+    <div class="service">
+      <div class="service-number">03</div>
+      <div>
+        <div class="service-name">Motion Design</div>
+        <p class="service-description">
+          Dynamic animations and motion graphics that add energy and storytelling
+          to brands, products, and digital experiences.
+        </p>
+      </div>
+    </div>
+
+    <div class="service">
+      <div class="service-number">04</div>
+      <div>
+        <div class="service-name">Branding</div>
+        <p class="service-description">
+          Crafting cohesive visual identities -- from logos to full brand
+          systems -- that communicate a clear and memorable presence.
+        </p>
+      </div>
+    </div>
+
+    <div class="service">
+      <div class="service-number">05</div>
+      <div>
+        <div class="service-name">Web Design</div>
+        <p class="service-description">
+          Designing clean, modern, and conversion-focused websites with
+          attention to layout, typography, and user experience.
+        </p>
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= PROJECTS ================= -->
+
+<section class="projects" id="projects">
+
+  <h2 class="hero-heading">Project</h2>
+
+  <div class="project-stack">
+
+    <!-- PROJECT 01 -->
+
+    <div class="project-container">
+
+      <div class="project-card">
+
+        <div class="project-top">
+
+          <div class="project-number">01</div>
+
+          <div class="project-category">
+            Client
+          </div>
+
+          <div class="project-name">
+            Nextlevel Studio
+          </div>
+
+          <button class="live-btn">
+            Live Project
+          </button>
+
+        </div>
+
+        <div class="project-images">
+
+          <div class="project-left">
+
+            <img src="https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055344_5eff02e0-87a5-41ce-b64f-eb08da8f33db.png&w=1280&q=85">
+
+            <img src="https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055431_11d841fd-8b41-46a5-82e4-b04f2407a7d8.png&w=1280&q=85">
+
+          </div>
+
+          <div class="project-right">
+
+            <img src="https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055451_e317bf2d-28d4-48cc-86b0-6f72f25b6327.png&w=1280&q=85">
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- PROJECT 02 -->
+
+    <div class="project-container">
+
+      <div class="project-card">
+
+        <div class="project-top">
+
+          <div class="project-number">02</div>
+
+          <div class="project-category">
+            Personal
+          </div>
+
+          <div class="project-name">
+            Aura Brand Identity
+          </div>
+
+          <button class="live-btn">
+            Live Project
+          </button>
+
+        </div>
+
+        <div class="project-images">
+
+          <div class="project-left">
+
+            <img src="https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055654_911201c5-36d9-4bc6-bac7-331adfce159f.png&w=1280&q=85">
+
+            <img src="https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055723_5ceda0b8-d9c2-4665-b2e3-83ba19ba76d1.png&w=1280&q=85">
+
+          </div>
+
+          <div class="project-right">
+
+            <img src="https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055753_adc5dcbd-a8e6-49c0-b43a-9b030d835cea.png&w=1280&q=85">
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- PROJECT 03 -->
+
+    <div class="project-container">
+
+      <div class="project-card">
+
+        <div class="project-top">
+
+          <div class="project-number">03</div>
+
+          <div class="project-category">
+            Client
+          </div>
+
+          <div class="project-name">
+            Solaris Digital
+          </div>
+
+          <button class="live-btn">
+            Live Project
+          </button>
+
+        </div>
+
+        <div class="project-images">
+
+          <div class="project-left">
+
+            <img src="https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055759_963cfb0b-4bd1-4b0f-9d0a-09bd6cf95b2f.png&w=1280&q=85">
+
+            <img src="https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_060108_438f781a-9846-4dcc-89ab-c4e6cb830f5b.png&w=1280&q=85">
+
+          </div>
+
+          <div class="project-right">
+
+            <img src="https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055818_9d062121-ad7e-46b9-999a-1a6a692ef1ee.png&w=1280&q=85">
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<footer>
+  © 2026 TAHA SHYK — 3D Creator
+  contact through emails-tahashyk11@gmail.com
+</footer>
+
+
+<script>
+
+/* ================= MARQUEE IMAGES ================= */
+
+const images = [
+"https://motionsites.ai/assets/hero-space-voyage-preview-eECLH3Yc.gif",
+"https://motionsites.ai/assets/hero-codenest-preview-Cgppc2qV.gif",
+"https://motionsites.ai/assets/hero-vex-ventures-preview-BczMFIiw.gif",
+"https://motionsites.ai/assets/hero-stellar-ai-v2-preview-DjvxjG3C.gif",
+"https://motionsites.ai/assets/hero-asme-preview-B_nGDnTP.gif",
+"https://motionsites.ai/assets/hero-transform-data-preview-Cx5OU29N.gif",
+"https://motionsites.ai/assets/hero-vitara-preview-Cjz2QYyU.gif",
+"https://motionsites.ai/assets/hero-terra-preview-BFjrCr7T.gif",
+"https://motionsites.ai/assets/hero-skyelite-preview-DHaZIgUv.gif",
+"https://motionsites.ai/assets/hero-aethera-preview-DknSlcTa.gif",
+"https://motionsites.ai/assets/hero-designpro-preview-D8c5_een.gif",
+"https://motionsites.ai/assets/hero-stellar-ai-preview-D3HL6bw1.gif",
+"https://motionsites.ai/assets/hero-xportfolio-preview-D4A8maiC.gif",
+"https://motionsites.ai/assets/hero-orbit-web3-preview-BXt4OttD.gif",
+"https://motionsites.ai/assets/hero-nexora-preview-cx5HmUgo.gif",
+"https://motionsites.ai/assets/hero-evr-ventures-preview-DZxeVFEX.gif",
+"https://motionsites.ai/assets/hero-planet-orbit-preview-DWAP8Z1P.gif",
+"https://motionsites.ai/assets/hero-new-era-preview-CocuDUm9.gif",
+"https://motionsites.ai/assets/hero-wealth-preview-B70idl_u.gif",
+"https://motionsites.ai/assets/hero-luminex-preview-CxOP7ce6.gif",
+"https://motionsites.ai/assets/hero-celestia-preview-0yO3jXO8.gif"
+];
+
+function createImages(container, list){
+
+  // Triple images for seamless movement
+  const all = [...list,...list,...list];
+
+  all.forEach(src=>{
+
+    const img=document.createElement("img");
+
+    img.src=src;
+    img.loading="lazy";
+
+    container.appendChild(img);
+
+  });
+
+}
+
+createImages(
+  document.getElementById("row1"),
+  images.slice(0,11)
+);
+
+createImages(
+  document.getElementById("row2"),
+  images.slice(11)
+);
+
+
+/* ================= SCROLL MARQUEE ================= */
+
+const row1=document.getElementById("row1");
+const row2=document.getElementById("row2");
+const marquee=document.getElementById("marquee");
+
+function updateMarquee(){
+
+  const rect=marquee.getBoundingClientRect();
+
+  const offset=
+    (window.scrollY - (window.scrollY + rect.top) + window.innerHeight)
+    * .3;
+
+  row1.style.transform=
+    `translateX(${-(offset-200)}px)`;
+
+  row2.style.transform=
+    `translateX(${offset-200}px)`;
+
+}
+
+window.addEventListener(
+  "scroll",
+  updateMarquee,
+  {passive:true}
+);
+
+updateMarquee();
+
+
+/* ================= MAGNETIC PORTRAIT ================= */
+
+const magnet=document.getElementById("magnet");
+const portrait=magnet.querySelector("img");
+
+magnet.addEventListener("mousemove",(e)=>{
+
+  const rect=magnet.getBoundingClientRect();
+
+  const x=e.clientX-(rect.left+rect.width/2);
+  const y=e.clientY-(rect.top+rect.height/2);
+
+  portrait.style.transform=
+    `translate3d(${x/3}px,${y/3}px,0)`;
+
+});
+
+magnet.addEventListener("mouseleave",()=>{
+
+  portrait.style.transform=
+    "translate3d(0,0,0)";
+
+});
+
+
+/* ================= ABOUT CHARACTER ANIMATION ================= */
+
+const aboutText=document.getElementById("aboutText");
+const originalText=aboutText.textContent.trim();
+
+aboutText.innerHTML="";
+
+const characters=[...originalText];
+
+characters.forEach(char=>{
+
+  const span=document.createElement("span");
+
+  span.textContent=char===" " ? "\u00A0" : char;
+
+  aboutText.appendChild(span);
+
+});
+
+const charSpans=aboutText.querySelectorAll("span");
+
+function animateText(){
+
+  const rect=aboutText.getBoundingClientRect();
+
+  const viewport=window.innerHeight;
+
+  let progress=
+    (viewport*.8-rect.top) /
+    (viewport*.6+rect.height);
+
+  progress=Math.max(0,Math.min(1,progress));
+
+  charSpans.forEach((span,i)=>{
+
+    const p=i/(charSpans.length-1);
+
+    const opacity=
+      .2 + Math.max(
+        0,
+        Math.min(1,(progress-p)*8)
+      )*.8;
+
+    span.style.opacity=opacity;
+
+  });
+
+}
+
+window.addEventListener(
+  "scroll",
+  animateText,
+  {passive:true}
+);
+
+animateText();
+
+
+/* ================= SCROLL REVEAL ================= */
+
+const revealElements=
+  document.querySelectorAll(
+    ".service,.decor"
+  );
+
+const observer=
+  new IntersectionObserver(
+    entries=>{
+
+      entries.forEach(entry=>{
+
+        if(entry.isIntersecting){
+
+          entry.target.classList.add("visible");
+
+        }
+
+      });
+
+    },
+    {
+      threshold:0.05
+    }
+  );
+
+revealElements.forEach(el=>{
+  observer.observe(el);
+});
+
+
+/* ================= PROJECT CARD SCALE ================= */
+
+const projectContainers=
+  document.querySelectorAll(".project-container");
+
+function scaleProjects(){
+
+  projectContainers.forEach((container,index)=>{
+
+    const card=
+      container.querySelector(".project-card");
+
+    const rect=
+      container.getBoundingClientRect();
+
+    const progress=
+      Math.max(
+        0,
+        Math.min(
+          1,
+          -rect.top/(window.innerHeight*.85)
+        )
+      );
+
+    const scale=
+      1-(2-index)*.03*progress;
+
+    card.style.transform=
+      `scale(${scale})`;
+
+  });
+
+}
+
+window.addEventListener(
+  "scroll",
+  scaleProjects,
+  {passive:true}
+);
+
+scaleProjects();
+
+
+/* ================= SMOOTH NAV ================= */
+
+document.querySelectorAll(
+  'a[href^="#"]'
+).forEach(link=>{
+
+  link.addEventListener("click",(e)=>{
+
+    const target=
+      document.querySelector(
+        link.getAttribute("href")
+      );
+
+    if(target){
+
+      e.preventDefault();
+
+      target.scrollIntoView({
+        behavior:"smooth"
+      });
+
+    }
+
+  });
+
+});
+
+</script>
+
+</body>
+</html>
